@@ -1,0 +1,31 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:5
+    container_name: mongo-silvereconomy
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: silvereconomy
+    ports:
+      - 27020:27017
+    volumes:
+      - ~/silvereconomy/mongo:/data/db
+    networks:
+      - silvereconomy
+node:
+  build: .
+  container_name: node-silvereconomy
+  restart: always
+  ports:
+    - 3030:3000
+  depends_on:
+    - mongo
+  networks:
+    - silvereconomy
+  volumes:
+    - ./:/usr/src/app
+    - exclude:/usr/src/app/node_modules/
+volumes:
+  exclude:
+networks:
+  silvereconomy:
