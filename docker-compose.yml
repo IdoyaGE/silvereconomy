@@ -1,0 +1,32 @@
+version: "3"
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo-silvereconomy
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: silvereconomy
+    ports:
+      - "27050:27017"
+    volumes:
+      - ~/silvereconomy/mongo:/data/db
+    networks:
+      - silvereconomy
+  backend:
+    build: ./backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    networks:
+      - silvereconomy
+  frontend:
+    build: ./frontend
+    ports:
+      - 80:80
+    depends_on:
+      - mongo
+    networks:
+      - silvereconomy
+networks:
+  silvereconomy:

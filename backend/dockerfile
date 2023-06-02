@@ -1,11 +1,11 @@
-#dockerfile for node server
+# dockerfile for node Server
 FROM node:latest
-# Create app directory
+# create app directory
 WORKDIR /usr/src/app
-# Install app dependencies
+# install app dependencies
 COPY package*.json ./
 RUN npm install
-# Bundle app source
+# bundle pp source
 COPY . .
 EXPOSE 3000
 CMD [ "npm", "start" ]
