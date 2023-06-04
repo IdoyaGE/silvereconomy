@@ -9,6 +9,7 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
+import usersRoutes from "./routes/users.js";
 import register from "./controllers/auth.js";
 
 //Configuración del server
@@ -42,6 +43,8 @@ app.post("auth(register", upload.single("picture"), register);
 
 //Otras rutas
 app.use("/auth", authRoutes);
+app.use("/users", usersRoutes);
+app.use("/posts", postsRoutes);
 
 //Configuración de conexión con MongoDB
 const PORT = process.env.PORT || 3000;
