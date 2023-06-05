@@ -9,7 +9,14 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
+import usersRoutes from "./routes/users.js";
+import postsRoutes from "./routes/posts.js";
 import register from "./controllers/auth.js";
+import createPost from "./controllers/posts.js";
+import verifyToken from "./middleware/auth.js";
+import User from "./models/User.js";
+import Post from "./models/Post.js";
+import { users, posts } from "./data/index.js";
 
 //Configuración del server
 const __filename = fileURLToPath(import.meta.url);
@@ -38,10 +45,13 @@ const upload = multer({ storage });
 
 //Rutas con archivos
 
-app.post("auth(register", upload.single("picture"), register);
+app.post("auth/register", upload.single("picture"), register);
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 //Otras rutas
 app.use("/auth", authRoutes);
+app.use("/users", usersRoutes);
+app.use("/posts", postsRoutes);
 
 //Configuración de conexión con MongoDB
 const PORT = process.env.PORT || 3000;
@@ -52,5 +62,9 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    /*Añadir datos de prueba*/
+    //users.insertMany(users);
+    //posts.insertMany(posts);
   })
+
   .catch((error) => console.log(`${error} no conectado`));
