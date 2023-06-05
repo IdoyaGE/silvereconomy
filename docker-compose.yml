@@ -15,7 +15,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - 3000:3000
+      - 3033:3000
     depends_on:
       - mongo
     networks:
