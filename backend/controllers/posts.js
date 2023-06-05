@@ -1,4 +1,5 @@
 import Post from "../models/Post.js";
+import User from "../models/User.js";
 
 /*CREAR*/
 export const createPost = async (req, res) => {
@@ -69,3 +70,5 @@ export const likePost = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export default (createPost, getFeedPosts, getUserPosts, likePost);
