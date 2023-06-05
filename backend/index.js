@@ -62,10 +62,6 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
     /*Añadir datos de prueba*/
     //users.insertMany(users);
     //posts.insertMany(posts);
