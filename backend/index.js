@@ -45,7 +45,7 @@ const upload = multer({ storage });
 
 //Rutas con archivos
 
-app.post("auth/register", upload.single("picture"), register);
+/* app.post("auth/register", upload.single("picture"), register); */
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 //Otras rutas
