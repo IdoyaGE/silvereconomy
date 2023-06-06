@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./form";
 //Componente página inicio sesión
-//Utiliza el componente BOX de la librería MUI para estructurar y posicional los elementos de la página
+//Utiliza el componente BOX de la librería MUI para estructurar y posicionar los elementos de la página
 //HOOK useMediaQuery: para móvil
 const LoginPage = () => {
   const theme = useTheme();
@@ -28,7 +28,8 @@ const LoginPage = () => {
         backgroundColor={theme.palette.background.alt}
       >
         <Typography fontWeight='500' variant='h5' sx={{ mb: "1.5rem" }}>
-          Bienvenid@ a Konecta, queda con gente de tu ciudad
+          Bienvenid@ a Konecta y encuentra la ayuda que necesitas en tu día a
+          día
         </Typography>
         <Form />
       </Box>

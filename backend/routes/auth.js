@@ -4,5 +4,5 @@ import { login } from "../controllers/auth.js";
 const router = express.Router();
 
 router.post("/login", login);
-
+//esportamos el enrutador
 export default router;

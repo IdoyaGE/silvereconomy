@@ -1,3 +1,4 @@
+//COMPONENTE USUARIO: elementos del usuario (imagen), librería MUI
 import {
   ManageAccountsOutlined,
   EditOutlined,
@@ -6,8 +7,10 @@ import {
 } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "components/UserImage";
+//Contenedor flexible
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
+//HOOKS para acceder a estado, obtener token y navegar por la app
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,19 +20,21 @@ const UserWidget = ({ userId, picturePath }) => {
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
+  //Estilos MUI
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-
+  //Solicitud GET  para obtener datos del usuario y almacenarlos en su estado en la data
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+    const response = await fetch(`http://localhost:3000/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
     setUser(data);
   };
-
+  // para llamar a GetUser cuando se monta el componente
+  //Si el estado es null, no se renderiza hasta obtener los datos del usuario
   useEffect(() => {
     getUser();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -37,20 +42,20 @@ const UserWidget = ({ userId, picturePath }) => {
   if (!user) {
     return null;
   }
-
+  //Si se obtienen los datos del usuario, renderizamos su perfil con todos sus elementos
   const {
     firstName,
     lastName,
     location,
-    occupation,
+    preferences,
     viewedProfile,
     impressions,
     friends,
   } = user;
-
+  //Devolvemos la info del usuario (ubicación, preferencias, perfil visto, impresiones y redes sociales)
   return (
     <WidgetWrapper>
-      {/* FIRST ROW */}
+      {/* Datos usuario */}
       <FlexBetween
         gap='0.5rem'
         pb='1.1rem'
@@ -72,7 +77,7 @@ const UserWidget = ({ userId, picturePath }) => {
             >
               {firstName} {lastName}
             </Typography>
-            <Typography color={medium}>{friends.length} friends</Typography>
+            <Typography color={medium}>{friends.length} Voluntarios</Typography>
           </Box>
         </FlexBetween>
         <ManageAccountsOutlined />
@@ -80,7 +85,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
       <Divider />
 
-      {/* SECOND ROW */}
+      {/* Ubicación*/}
       <Box p='1rem 0'>
         <Box display='flex' alignItems='center' gap='1rem' mb='0.5rem'>
           <LocationOnOutlined fontSize='large' sx={{ color: main }} />
@@ -88,22 +93,22 @@ const UserWidget = ({ userId, picturePath }) => {
         </Box>
         <Box display='flex' alignItems='center' gap='1rem'>
           <WorkOutlineOutlined fontSize='large' sx={{ color: main }} />
-          <Typography color={medium}>{occupation}</Typography>
+          <Typography color={medium}>{preferences}</Typography>
         </Box>
       </Box>
 
       <Divider />
 
-      {/* THIRD ROW */}
+      {/* Perfil visto, impresiones*/}
       <Box p='1rem 0'>
         <FlexBetween mb='0.5rem'>
-          <Typography color={medium}>Who's viewed your profile</Typography>
+          <Typography color={medium}>Han visto tu perfil</Typography>
           <Typography color={main} fontWeight='500'>
             {viewedProfile}
           </Typography>
         </FlexBetween>
         <FlexBetween>
-          <Typography color={medium}>Impressions of your post</Typography>
+          <Typography color={medium}>Impresiones de posts</Typography>
           <Typography color={main} fontWeight='500'>
             {impressions}
           </Typography>
@@ -112,10 +117,10 @@ const UserWidget = ({ userId, picturePath }) => {
 
       <Divider />
 
-      {/* FOURTH ROW */}
+      {/* Redes sociales*/}
       <Box p='1rem 0'>
         <Typography fontSize='1rem' color={main} fontWeight='500' mb='1rem'>
-          Social Profiles
+          Redes Sociales
         </Typography>
 
         <FlexBetween gap='1rem' mb='0.5rem'>
@@ -125,7 +130,7 @@ const UserWidget = ({ userId, picturePath }) => {
               <Typography color={main} fontWeight='500'>
                 Twitter
               </Typography>
-              <Typography color={medium}>Social Network</Typography>
+              <Typography color={medium}>Redes sociales</Typography>
             </Box>
           </FlexBetween>
           <EditOutlined sx={{ color: main }} />
@@ -138,7 +143,7 @@ const UserWidget = ({ userId, picturePath }) => {
               <Typography color={main} fontWeight='500'>
                 Linkedin
               </Typography>
-              <Typography color={medium}>Network Platform</Typography>
+              <Typography color={medium}>Relaciones</Typography>
             </Box>
           </FlexBetween>
           <EditOutlined sx={{ color: main }} />

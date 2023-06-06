@@ -1,5 +1,5 @@
-//Formulario de React  permite a los usuarios registrarse o iniciar sesión en una aplicación.
-//Utiliza la librería MUI para el estilo d el formulario
+//Formulario de React que permite a los usuarios registrarse o iniciar sesión en una aplicación.
+//Utiliza la librería MUI para el estilo del formulario
 //La librería yuk, para definir y validar los esquemas de los formularios, se utiliza junto a la librería formik
 //La librería React-dropzone, para subir los archivos de fotos del usuario
 import { useState } from "react";
@@ -24,18 +24,18 @@ import FlexBetween from "components/FlexBetween";
 //Uno para el registro (registerSchema) y otro para el inicio de sesión (loginSchema)
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().required("obligatorio"),
-  lastName: yup.string().required("obligatorio"),
-  email: yup.string().email("email incorrecto").required("obligatorio"),
-  password: yup.string().required("obligatorio"),
-  location: yup.string().required("obligatorio"),
-  occupation: yup.string().required("obligatorio"),
-  picture: yup.string().required("obligatorio"),
+  firstName: yup.string().required("*Obligatorio"),
+  lastName: yup.string().required("*Obligatorio"),
+  email: yup.string().email("*Email incorrecto").required("*Obligatorio"),
+  password: yup.string().required("*Obligatorio"),
+  location: yup.string().required("*Obligatorio"),
+  preferences: yup.string().required("*Obligatorio"),
+  picture: yup.string().required("*Obligatorio"),
 });
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("email incorrecto").required("obligatorio"),
-  password: yup.string().required("obligatorio"),
+  email: yup.string().email("*Email incorrecto").required("*Obligatorio"),
+  password: yup.string().required("*Obligatorio"),
 });
 //Definimos los valores iniciales del formulario para el registro
 const initialValuesRegister = {
@@ -44,7 +44,7 @@ const initialValuesRegister = {
   email: "",
   password: "",
   location: "",
-  occupation: "",
+  preferences: "",
   picture: "",
 };
 //Definimos los valores iniciales del formulario para el login una vez registrado
@@ -64,13 +64,13 @@ const Form = () => {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
-    // this allows us to send form info with image
+    // para enviar el formulario con una imagen
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", values.picture.name);
-
+    //Se guarda en formato JSON
     const savedUserResponse = await fetch(
       "http://localhost:3000/auth/register",
       {
@@ -80,18 +80,19 @@ const Form = () => {
     );
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
-
+    //Si el registro se ha hecho correctamente, te lleva a la página de login
     if (savedUser) {
       setPageType("login");
     }
   };
-
+  //Petición POST con los props introducidos y convierte en un string con formato JSON
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
+    //Reseteamos el formulario y actualizamos el estado de la app con los datos del usuario registrado para llevarlo a la HOME
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
@@ -104,12 +105,13 @@ const Form = () => {
       navigate("/home");
     }
   };
-
+  //Envío del form si es login o register
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
   };
-  //Renderizado del form
+  //Renderizado del form (Librería Formik)
+  //Box flexible, textfiel para valores, dropzone para subir imagen y button submit
   return (
     <Formik
       onSubmit={handleFormSubmit}
@@ -173,12 +175,12 @@ const Form = () => {
                   label='Preferencia'
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.occupation}
+                  value={values.preferences}
                   name='preferences'
                   error={
-                    Boolean(touched.occupation) && Boolean(errors.occupation)
+                    Boolean(touched.preferences) && Boolean(errors.preferences)
                   }
-                  helperText={touched.occupation && errors.occupation}
+                  helperText={touched.preferences && errors.preferences}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <Box

@@ -1,4 +1,3 @@
-// color design tokens export
 export const colorTokens = {
   grey: {
     0: "#FFFFFF",
@@ -16,61 +15,58 @@ export const colorTokens = {
     1000: "#000000",
   },
   primary: {
-    50: "#E6FBFF",
-    100: "#CCF7FE",
-    200: "#99EEFD",
-    300: "#66E6FC",
-    400: "#33DDFB",
-    500: "#00D5FA",
-    600: "#00A0BC",
-    700: "#006B7D",
-    800: "#00353F",
-    900: "#001519",
+    50: "#FFE6E6",
+    100: "#FFCCCC",
+    200: "#FF9999",
+    300: "#FF6666",
+    400: "#FF3333",
+    500: "#FF0000",
+    600: "#BC0000",
+    700: "#7D0000",
+    800: "#3F0000",
+    900: "#190000",
   },
 };
 
-// mui theme settings
 export const themeSettings = (mode) => {
   return {
     palette: {
       mode: mode,
       ...(mode === "dark"
         ? {
-            // palette values for dark mode
             primary: {
               dark: colorTokens.primary[200],
               main: colorTokens.primary[500],
               light: colorTokens.primary[800],
             },
             neutral: {
-              dark: colorTokens.grey[100],
-              main: colorTokens.grey[200],
-              mediumMain: colorTokens.grey[300],
-              medium: colorTokens.grey[400],
-              light: colorTokens.grey[700],
+              dark: "#000000",
+              main: "#333333",
+              mediumMain: "#666666",
+              medium: "#858585",
+              light: "#C2C2C2",
             },
             background: {
-              default: colorTokens.grey[900],
-              alt: colorTokens.grey[800],
+              default: "#0A0A0A",
+              alt: "#1A1A1A",
             },
           }
         : {
-            // palette values for light mode
             primary: {
               dark: colorTokens.primary[700],
               main: colorTokens.primary[500],
               light: colorTokens.primary[50],
             },
             neutral: {
-              dark: colorTokens.grey[700],
-              main: colorTokens.grey[500],
-              mediumMain: colorTokens.grey[400],
-              medium: colorTokens.grey[300],
-              light: colorTokens.grey[50],
+              dark: "#333333",
+              main: "#666666",
+              mediumMain: "#858585",
+              medium: "#A3A3A3",
+              light: "#F0F0F0",
             },
             background: {
-              default: colorTokens.grey[10],
-              alt: colorTokens.grey[0],
+              default: "#F6F6F6",
+              alt: "#FFFFFF",
             },
           }),
     },

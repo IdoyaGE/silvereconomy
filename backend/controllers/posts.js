@@ -71,4 +71,4 @@ export const likePost = async (req, res) => {
   }
 };
 
-export default (createPost, getFeedPosts, getUserPosts, likePost);
+export default { createPost, getFeedPosts, getUserPosts, likePost };

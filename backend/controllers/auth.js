@@ -11,7 +11,7 @@ export const register = async (req, res) => {
       lastName,
       email,
       password,
-      pisturePath,
+      picturePath,
       friends,
       location,
       preferences,
@@ -20,12 +20,12 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
     //Crea un nuevo usuario con sus datos de registro
-    const newUser = newUser({
+    const newUser = User({
       firstName,
       lastName,
       email,
       password: passwordHash,
-      pisturePath,
+      picturePath,
       friends,
       location,
       preferences,
@@ -54,7 +54,7 @@ export const login = async (req, res) => {
     delete user.password;
     res.status(200).json({ token, user });
   } catch (err) {
-    res.status(500), json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
