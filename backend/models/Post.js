@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// Esquema de los datos que se guardan en MongoDB
 
 const postSchema = mongoose.Schema(
   {
@@ -29,7 +30,7 @@ const postSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-
+//POST: para realizar operaciones en la base de datos, como guardar nuevos posts, consultar posts existentes
 const Post = mongoose.model("Post", postSchema);
 
 export default Post;

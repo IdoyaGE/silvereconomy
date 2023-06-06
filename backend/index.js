@@ -54,7 +54,7 @@ app.use("/users", usersRoutes);
 app.use("/posts", postsRoutes);
 
 //Configuración de conexión con MongoDB
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParse: true,
