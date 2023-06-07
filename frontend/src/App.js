@@ -2,8 +2,8 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 //Importamos los componentes
 import HomePage from "pages/homePage";
-import LoginPage from "pages/loginPage";
 import ProfilePage from "pages/profilePage";
+import Login from "pages/loginPage/login";
 //Importamos las funciones
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -18,19 +18,19 @@ function App() {
   const isAuth = Boolean(useSelector((state) => state.token));
   //Devolvemos las páginas principales de la web
   return (
-    <div className='app'>
+    <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path='/' element={<LoginPage />} />
+            <Route path="/" element={<Login />} />
             <Route
-              path='/home'
-              element={isAuth ? <HomePage /> : <Navigate to='/' />}
+              path="/home"
+              element={isAuth ? <HomePage /> : <Navigate to="/" />}
             />
             <Route
-              path='/profile/:userId'
-              element={isAuth ? <ProfilePage /> : <Navigate to='/' />}
+              path="/profile/:userId"
+              element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
             />
           </Routes>
         </ThemeProvider>
