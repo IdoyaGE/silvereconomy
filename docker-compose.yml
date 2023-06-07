@@ -1,15 +1,18 @@
 version: "3"
 services:
   mongo:
-    image: mongo:5
+    image: mongo:latest
     container_name: mongo-silvereconomy
     restart: always
     environment:
       MONGO_INITDB_DATABASE: silvereconomy
+    ports:
+      - "27050:27017"
     volumes:
-      - ~/silvereconomyData/mongo:/data/db
+      - ~/silvereconomy/mongo:/data/db
     networks:
       - silvereconomy
+
   backend:
     build: ./backend
     ports:

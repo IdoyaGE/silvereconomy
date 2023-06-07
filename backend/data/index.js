@@ -1,4 +1,71 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+
+const userSchema = new mongoose.Schema({
+  firstname: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  location: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  sex: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  phonenumber: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ["user", "friend"],
+  },
+  picture: {
+    type: String,
+    required: false,
+  },
+  posts: {
+    type: String,
+    required: false,
+  },
+});
+
+// add verification methods to userSchema
+userSchema.methods.verifyPassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
+const User = mongoose.model("user", userSchema);
+
+export default User;
+
+/* import mongoose from "mongoose";
 
 const userIds = [
   new mongoose.Types.ObjectId(),
@@ -65,3 +132,4 @@ export const posts = [
     comments: ["Buena compañía", "Buena conocedora del mundo del cine"],
   },
 ];
+ */
