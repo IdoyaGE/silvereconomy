@@ -22,17 +22,36 @@ import FlexBetween from "components/FlexBetween";
 
 //Definimos dos esquemas de validación utilizando la biblioteca yup:
 //Uno para el registro (registerSchema) y otro para el inicio de sesión (loginSchema)
-
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("*Obligatorio"),
   lastName: yup.string().required("*Obligatorio"),
   email: yup.string().email("*Email incorrecto").required("*Obligatorio"),
   password: yup.string().required("*Obligatorio"),
   location: yup.string().required("*Obligatorio"),
-  preferences: yup.string().required("*Obligatorio"),
-  picture: yup.string().required("*Obligatorio"),
+  age: yup
+    .number()
+    .typeError("*Debe ser un número")
+    .required("*Obligatorio")
+    .max(999),
+  sex: yup.string().required("*Obligatorio"),
+  phoneNumber: yup
+    .string()
+    .required("*Obligatorio")
+    .matches(/^\d{9}$/, "*Debe tener 9 dígitos"),
+  picture: yup.string(),
 });
-
+/*const registerSchema = yup.object().shape({
+  firstName: yup.string().required("*Obligatorio"),
+  lastName: yup.string().required("*Obligatorio"),
+  email: yup.string().email("*Email incorrecto").required("*Obligatorio"),
+  password: yup.string().required("*Obligatorio"),
+  location: yup.string().required("*Obligatorio"),
+  age: yup.number().required("*Obligatorio"),
+  sex: yup.number().required("*Obligatorio"),
+  phoneNumber: yup.number().required("*Obligatorio"),
+  picture: yup.string(),
+});
+ */
 const loginSchema = yup.object().shape({
   email: yup.string().email("*Email incorrecto").required("*Obligatorio"),
   password: yup.string().required("*Obligatorio"),
@@ -44,9 +63,25 @@ const initialValuesRegister = {
   email: "",
   password: "",
   location: "",
-  preferences: "",
+  age: "",
+  sex: "",
+  phoneNumber: "",
+  role: "",
   picture: "",
 };
+
+/* const initialValuesRegister = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  location: "",
+  age: "",
+  sex: "",
+  phoneNumber: "",
+  role: "",
+  picture: "",
+}; */
 //Definimos los valores iniciales del formulario para el login una vez registrado
 
 const initialValuesLogin = {
@@ -172,11 +207,35 @@ const Form = () => {
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
-                  label='Preferencia'
+                  label='Edad'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.preferences}
-                  name='preferences'
+                  name='age'
+                  error={
+                    Boolean(touched.preferences) && Boolean(errors.preferences)
+                  }
+                  helperText={touched.preferences && errors.preferences}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  label='Sexo'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.preferences}
+                  name='sex'
+                  error={
+                    Boolean(touched.preferences) && Boolean(errors.preferences)
+                  }
+                  helperText={touched.preferences && errors.preferences}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  label='Teléfono'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.preferences}
+                  name='phoneNumber'
                   error={
                     Boolean(touched.preferences) && Boolean(errors.preferences)
                   }
@@ -205,7 +264,10 @@ const Form = () => {
                       >
                         <input {...getInputProps()} />
                         {!values.picture ? (
-                          <p>Añade una foto</p>
+                          <p>
+                            Si quieres puedes añadir una foto o una imagen, pero
+                            no es obligatorio:
+                          </p>
                         ) : (
                           <FlexBetween>
                             <Typography>{values.picture.name}</Typography>
@@ -271,8 +333,8 @@ const Form = () => {
               }}
             >
               {isLogin
-                ? "No tienes cuenta? Regístrate."
-                : "Ya tienes cuenta? Entra."}
+                ? "No tienes cuenta?  Regístrate"
+                : "Ya tienes cuenta?  Entrar"}
             </Typography>
           </Box>
         </form>
