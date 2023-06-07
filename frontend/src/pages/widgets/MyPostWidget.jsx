@@ -1,3 +1,4 @@
+//Componente para editar un post (librería MUI para los estilos)
 import {
   EditOutlined,
   DeleteOutlined,
@@ -24,8 +25,9 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
-
+//Componente POST que recibe prop imagen
 const MyPostWidget = ({ picturePath }) => {
+  //HOOKS para obtener dispatch, tema y cambios de estado desde la data
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
@@ -36,7 +38,7 @@ const MyPostWidget = ({ picturePath }) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
-
+  //Para enviar el post al servidor
   const handlePost = async () => {
     const formData = new FormData();
     formData.append("userId", _id);
@@ -45,8 +47,8 @@ const MyPostWidget = ({ picturePath }) => {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
     }
-
-    const response = await fetch(`http://localhost:3001/posts`, {
+    //Solicitud POST al servidor para crear un nuevo post
+    const response = await fetch(`http://localhost:3000/posts`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
@@ -56,13 +58,17 @@ const MyPostWidget = ({ picturePath }) => {
     setImage(null);
     setPost("");
   };
-
+  //Devolvemos un contenedor flexible con la imagen subida y un espacio para escribir el post
+  //Componente Dropzone para manejar la carga de la imagen y actualizar su estado
+  //Espacio para escribir el post con archivos adjuntos y posibilidad de audio
+  //Deshabilitamos el botón si ya hay contenido en el post
+  //Función handlePost para enviar el post al servidor
   return (
     <WidgetWrapper>
       <FlexBetween gap='1.5rem'>
         <UserImage image={picturePath} />
         <InputBase
-          placeholder="What's on your mind..."
+          placeholder='Comparte tus experiencias'
           onChange={(e) => setPost(e.target.value)}
           value={post}
           sx={{
@@ -96,7 +102,7 @@ const MyPostWidget = ({ picturePath }) => {
                 >
                   <input {...getInputProps()} />
                   {!image ? (
-                    <p>Add Image Here</p>
+                    <p>Añade una imagen</p>
                   ) : (
                     <FlexBetween>
                       <Typography>{image.name}</Typography>
@@ -127,7 +133,7 @@ const MyPostWidget = ({ picturePath }) => {
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
           >
-            Image
+            Imagen
           </Typography>
         </FlexBetween>
 
@@ -140,7 +146,7 @@ const MyPostWidget = ({ picturePath }) => {
 
             <FlexBetween gap='0.25rem'>
               <AttachFileOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Attachment</Typography>
+              <Typography color={mediumMain}>Archivos</Typography>
             </FlexBetween>
 
             <FlexBetween gap='0.25rem'>

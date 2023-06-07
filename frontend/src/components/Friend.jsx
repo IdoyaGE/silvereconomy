@@ -1,29 +1,36 @@
+//Iconos de la librería MUI (agregar y eliminar persona)
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
+//Contenedor flexible, icono, tipografía texto y HOOK para acceder a los temas de MUI
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
+//Para acceder al almacenamiento global, seleccionar y realizar acciones
 import { useDispatch, useSelector } from "react-redux";
+//Para navegar entre las diferentes rutas
 import { useNavigate } from "react-router-dom";
+//Acciones con los friends
 import { setFriends } from "state";
+//Espacio entre elementos del contenedor
 import FlexBetween from "./FlexBetween";
+//Imagen del User
 import UserImage from "./UserImage";
-
+//COMPONENTE FRIEND
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
-
   const { palette } = useTheme();
+  //Cambio color pantalla
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-
+  //para encontrar amigos con un id
   const isFriend = friends.find((friend) => friend._id === friendId);
-
+  //Función asíncrona para actualizar datos de los friends en formato JSON en el sevidor
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${_id}/${friendId}`,
+      `http://localhost:3000/users/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

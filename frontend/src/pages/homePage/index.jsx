@@ -6,11 +6,13 @@ import MyPostWidget from "pages/widgets/MyPostWidget";
 import PostsWidget from "pages/widgets/PostsWidget";
 import AdvertWidget from "pages/widgets/AdvertWidget";
 import FriendListWidget from "pages/widgets/FriendListWidget";
-
+//Página principal con sus componentes
 const HomePage = () => {
+  //HOOK isMediaQuery para responsive en pantalla móvil
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  //para obtener el estado del usuario
   const { _id, picturePath } = useSelector((state) => state.user);
-
+  //Contenido de la página en contenedor flexible y cajas anidadas
   return (
     <Box>
       <Navbar />

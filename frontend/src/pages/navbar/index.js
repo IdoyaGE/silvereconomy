@@ -1,3 +1,5 @@
+//COMPONENTE NAVBAR (Librería MUI)
+//Hook useState para gestionar los cambios del form de registro a inicio sesión
 import { useState } from "react";
 import {
   Box,
@@ -20,18 +22,22 @@ import {
   Menu,
   Close,
 } from "@mui/icons-material";
+//HOOKS de React
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
+//Contenedor flexible
 import FlexBetween from "components/FlexBetween";
-
+//Definición del componente Navbar
+//3 hooks para manejar cambios de estado, acciones del Navbar y navegación
+//Responsive para móviles
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-
+  //Estilos (librería MUI)
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
@@ -56,7 +62,7 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+          Konecta
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween
@@ -73,7 +79,7 @@ const Navbar = () => {
         )}
       </FlexBetween>
 
-      {/* DESKTOP NAV */}
+      {/* Menú en pantalla grande: dos modos de pantalla light y dark */}
       {isNonMobileScreens ? (
         <FlexBetween gap='2rem'>
           <IconButton onClick={() => dispatch(setMode())}>
@@ -107,7 +113,7 @@ const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={() => dispatch(setLogout())}>Salir</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -119,7 +125,7 @@ const Navbar = () => {
         </IconButton>
       )}
 
-      {/* MOBILE NAV */}
+      {/* Navegador para móviles */}
       {!isNonMobileScreens && isMobileMenuToggled && (
         <Box
           position='fixed'
@@ -131,7 +137,7 @@ const Navbar = () => {
           minWidth='300px'
           backgroundColor={background}
         >
-          {/* CLOSE ICON */}
+          {/* Hamburguesa*/}
           <Box display='flex' justifyContent='flex-end' p='1rem'>
             <IconButton
               onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
@@ -140,7 +146,7 @@ const Navbar = () => {
             </IconButton>
           </Box>
 
-          {/* MENU ITEMS */}
+          {/* Elementos del menú: icono modos pantalla */}
           <FlexBetween
             display='flex'
             flexDirection='column'
@@ -182,9 +188,7 @@ const Navbar = () => {
                 <MenuItem value={fullName}>
                   <Typography>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
-                  Log Out
-                </MenuItem>
+                <MenuItem onClick={() => dispatch(setLogout())}>Salir</MenuItem>
               </Select>
             </FormControl>
           </FlexBetween>

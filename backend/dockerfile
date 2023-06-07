@@ -1,11 +1,11 @@
-# dockerfile for node Server
+# dockerfile_ imagen base de Docker más reciente
 FROM node:latest
-# create app directory
+# directorio de trabajo dentro del contendor donde copiamos los archicos de la API 
 WORKDIR /usr/src/app
-# install app dependencies
+# Dependencias de la API
 COPY package*.json ./
 RUN npm install
-# bundle pp source
+# Puerto 300 para la comunicación con Node.js
 COPY . .
 EXPOSE 3000
 CMD [ "npm", "start" ]
